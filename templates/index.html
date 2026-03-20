@@ -2,55 +2,638 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Maadhav | Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Maadhav Saini | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Dancing+Script:wght@500;700&family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      body {
-        font-family: Arial;
-        background: #0f172a;
-        color: white;
-        text-align: center;
-        margin: 0;
+      :root {
+        /* Space theme: dark blue base with cosmic accent */
+        --cream: #050b1f;
+        --cream-2: rgba(255, 255, 255, 0.07);
+        --espresso: #7dd3fc;
+        --espresso-2: #ffffff;
+        --muted: rgba(248, 250, 252, 0.74);
+        --border: rgba(125, 211, 252, 0.28);
+        --shadow: rgba(0, 0, 0, 0.45);
+        --mx: 50;
+        --my: 50;
+        --vx: 0;
+        --vy: 0;
       }
 
-      header {
-        padding: 60px;
-        background: #020617;
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI,
+          Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: var(--cream);
+        color: var(--espresso-2);
+        line-height: 1.5;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: var(--espresso);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .container {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Background & cursor effects */
+      .bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background-color: var(--cream);
+        background-image: radial-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+          radial-gradient(rgba(125, 211, 252, 0.22) 1px, transparent 1px),
+          radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+        background-size: 170px 170px, 260px 260px, 380px 380px;
+        background-position: 0 0, 60px 100px, 100px 30px;
+        animation: starDrift 26s linear infinite;
+        transform: translate3d(calc(var(--vx) * -18px), calc(var(--vy) * -18px), 0);
+        will-change: transform;
+      }
+
+      .bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 20% 0%, rgba(125, 211, 252, 0.18), transparent 55%),
+          radial-gradient(circle at 90% 10%, rgba(125, 211, 252, 0.12), transparent 45%),
+          linear-gradient(to bottom, rgba(5, 11, 31, 0.1), rgba(5, 11, 31, 0.85));
+        pointer-events: none;
+      }
+
+      @keyframes starDrift {
+        from {
+          background-position: 0 0, 60px 100px, 100px 30px;
+        }
+        to {
+          background-position: 0 200px, 60px -140px, 100px 260px;
+        }
+      }
+
+      .cursor-glow {
+        position: fixed;
+        left: calc(var(--mx, 0) * 1px);
+        top: calc(var(--my, 0) * 1px);
+        width: clamp(260px, 40vw, 520px);
+        height: clamp(260px, 40vw, 520px);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 1;
+        background: radial-gradient(circle at center, rgba(125, 211, 252, 0.23), transparent 60%);
+        mix-blend-mode: screen;
+        opacity: 0.75;
+        filter: blur(0.2px);
+      }
+
+      .page {
+        position: relative;
+        z-index: 2;
+      }
+
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+        background: rgba(5, 11, 31, 0.6);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .nav-brand {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--espresso-2);
+      }
+
+      .nav-brand:hover {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .nav-links a {
+        color: var(--espresso-2);
+        font-weight: 600;
+        font-size: 14px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        transition: background 160ms ease, border-color 160ms ease;
+      }
+
+      .nav-links a:hover {
+        border-color: rgba(125, 211, 252, 0.35);
+        text-decoration: none;
+        background: rgba(125, 211, 252, 0.06);
+      }
+
+      .nav-links a.active {
+        border-color: rgba(125, 211, 252, 0.55);
+        background: rgba(125, 211, 252, 0.12);
+      }
+
+      @media (hover: none) {
+        .cursor-glow {
+          display: none;
+        }
+      }
+
+      .pill {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--cream-2);
+        color: var(--espresso);
+        font-size: 14px;
+        line-height: 1;
+        white-space: nowrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--cream-2);
+        color: var(--espresso);
+        font-weight: 700;
+      }
+
+      .btn:hover {
+        background: rgba(125, 211, 252, 0.1);
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: var(--espresso);
+        color: #fff;
+        border-color: transparent;
+      }
+
+      .btn-primary:hover {
+        background: rgba(125, 211, 252, 0.85);
+      }
+
+      header.hero {
+        min-height: 100vh;
+        padding: 96px 0 56px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      header.hero::before {
+        content: "";
+        position: absolute;
+        inset: -220px -40px auto -40px;
+        height: 620px;
+        background: radial-gradient(circle at 18% 38%, rgba(125, 211, 252, 0.22), transparent 55%),
+          radial-gradient(circle at 72% 26%, rgba(255, 255, 255, 0.14), transparent 50%),
+          linear-gradient(to bottom, rgba(5, 11, 31, 0) 0%, rgba(5, 11, 31, 0.88) 78%, rgba(5, 11, 31, 1) 100%);
+        pointer-events: none;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 24px;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-card {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        background: radial-gradient(circle at 25% 20%, rgba(125, 211, 252, 0.35), transparent 50%),
+          radial-gradient(circle at 80% 35%, rgba(255, 255, 255, 0.18), transparent 55%),
+          linear-gradient(to bottom, rgba(5, 11, 31, 0) 0%, rgba(5, 11, 31, 0.35) 80%);
+        opacity: 0.9;
+        pointer-events: none;
+      }
+
+      .hero-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      @media (max-width: 820px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .hero h1 {
+        font-family: "Dancing Script", cursive;
+        margin: 0 0 10px;
+        font-size: clamp(44px, 6vw, 74px);
+        letter-spacing: 0;
+      }
+
+      .hero .tagline {
+        margin: 0 0 14px;
+        font-size: 18px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .hero .one-liner {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 22px;
       }
 
       section {
-        padding: 40px;
+        padding: 56px 0;
+        scroll-margin-top: 90px;
+      }
+
+      .section-title {
+        margin: 0 0 16px;
+        font-family: "Playfair Display", serif;
+        font-size: 28px;
+        letter-spacing: -0.01em;
       }
 
       .card {
-        background: #1e293b;
-        margin: 20px auto;
-        padding: 20px;
-        width: 80%;
-        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(125, 211, 252, 0.22);
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: 0 18px 50px var(--shadow);
+        backdrop-filter: blur(10px);
+        transition: transform 180ms ease, border-color 180ms ease;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(125, 211, 252, 0.35);
+      }
+
+      .skill-card {
+        position: relative;
+        padding-left: 24px;
+      }
+
+      .skill-card::before {
+        content: "";
+        position: absolute;
+        left: 18px;
+        top: 16px;
+        bottom: 16px;
+        width: 3px;
+        background: var(--accent, rgba(125, 211, 252, 0.65));
+        border-radius: 999px;
+        opacity: 0.95;
+        pointer-events: none;
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1.35fr 0.65fr;
+        gap: 20px;
+        align-items: start;
+      }
+
+      @media (max-width: 820px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .about p {
+        margin: 0 0 14px;
+        color: var(--muted);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      @media (max-width: 980px) {
+        .projects-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 620px) {
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .project-meta {
+        margin: 10px 0 14px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .project-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .note {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      footer {
+        padding: 24px 0 44px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      .contact-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 12px;
       }
     </style>
   </head>
   <body>
-    <header>
-      <h1>Maadhav Saini</h1>
-      <p>Future Neurosurgeon 🧠 | Student Developer</p>
+    <div class="bg" aria-hidden="true"></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+
+    <nav class="nav">
+      <div class="container nav-inner">
+        <a class="nav-brand" href="#top">Maadhav Saini</a>
+        <div class="nav-links">
+          <a href="#about">About Me</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <div id="top" class="page">
+      <header class="hero">
+        <div class="container hero-grid">
+        <div>
+          <h1>Maadhav Saini</h1>
+          <p class="tagline">Grade 9 IB student</p>
+          <p class="one-liner">interested in graphic and code design</p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">Skills</a>
+            <a class="btn" href="#about">About Me</a>
+            <a class="btn" href="#contact">Contact</a>
+          </div>
+        </div>
+
+        <div class="card hero-card">
+          <div class="note" style="margin-bottom: 8px; font-weight: 700;">
+            Highlights
+          </div>
+          <div class="chips">
+              <span class="pill">Music (Alto Sax + Piano)</span>
+              <span class="pill">Medicine</span>
+              <span class="pill">Business</span>
+              <span class="pill">Visual Arts</span>
+              <span class="pill">Math</span>
+          </div>
+          <div class="note" style="margin-top: 12px;">
+              Based in the GTA · Always learning
+          </div>
+        </div>
+      </div>
     </header>
 
-    <section>
-      <h2>About Me</h2>
-      <p>
-        IB student in the GTA interested in neuroscience and building cool
-        projects.
-      </p>
-    </section>
-
-    <section>
-      <h2>Projects</h2>
-
-      <div class="card">
-        <h3>Sorting Visualizer</h3>
-        <p>A project where I visualize sorting algorithms.</p>
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="card about">
+          <p>
+            I'm Maadhav, a Grade 9 IB student in the GTA. I love visual arts, music, and biology.
+            In my free time, you'll find me reading or playing an instrument.
+          </p>
+          <div class="note">
+            Built for showcasing what I’m learning and what I’m working on next.
+          </div>
+        </div>
       </div>
     </section>
+
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title">Skills</h2>
+        <div class="note" style="margin-bottom: 18px;">
+          Here are the skills I’m focused on right now (projects coming next).
+        </div>
+
+        <div class="projects-grid">
+          <div class="card skill-card" style="--accent: rgba(125, 211, 252, 0.9);">
+            <h3 style="margin: 0 0 6px;">Music</h3>
+            <div class="project-meta">
+              Alto saxophone and piano. I like practicing, listening closely, and experimenting with sound.
+            </div>
+          </div>
+
+          <div class="card skill-card" style="--accent: rgba(52, 211, 153, 0.85);">
+            <h3 style="margin: 0 0 6px;">Medicine</h3>
+            <div class="project-meta">
+              Biology and medicine. I enjoy understanding how systems work and how decisions are made.
+            </div>
+          </div>
+
+          <div class="card skill-card" style="--accent: rgba(251, 191, 36, 0.88);">
+            <h3 style="margin: 0 0 6px;">Business</h3>
+            <div class="project-meta">
+              Strategy and real-world problem solving—turning ideas into something practical.
+            </div>
+          </div>
+
+          <div class="card skill-card" style="--accent: rgba(232, 121, 249, 0.78);">
+            <h3 style="margin: 0 0 6px;">Visual Arts</h3>
+            <div class="project-meta">
+              Graphic and code design. I care about layout, clarity, and visuals that communicate well.
+            </div>
+          </div>
+
+          <div class="card skill-card" style="--accent: rgba(96, 165, 250, 0.8);">
+            <h3 style="margin: 0 0 6px;">Math</h3>
+            <div class="project-meta">
+              Problem-solving and patterns. I like using math to reason and build structured solutions.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Contact</h2>
+
+        <div class="card">
+          <div class="note" style="font-weight: 700; margin-bottom: 6px;">
+            Email
+          </div>
+          <a class="btn btn-primary" href="mailto:maadhavsaini@hotmail.com">maadhavsaini@hotmail.com</a>
+
+          <div class="note" style="margin-top: 14px;">
+            Or reach me on social:
+          </div>
+
+          <div class="contact-links">
+            <a class="pill" target="_blank" rel="noopener" href="https://www.instagram.com/saini.maadhav/">Instagram</a>
+            <a class="pill" target="_blank" rel="noopener" href="https://www.linkedin.com/in/maadhav-saini-8b64ba2b7/">LinkedIn</a>
+            <a class="pill" target="_blank" rel="noopener" href="https://github.com/maadhavsaini">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        © 2026 Maadhav Saini · One-page portfolio (Flask)
+      </div>
+    </footer>
+
+    </div>
+
+    <script>
+      (function initCursor() {
+        const prefersReduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        if (prefersReduced) return;
+
+        const root = document.documentElement;
+        let rafId = null;
+
+        window.addEventListener(
+          "mousemove",
+          function (e) {
+            const x = e.clientX;
+            const y = e.clientY;
+            if (rafId) return;
+
+            const w = window.innerWidth || 1;
+            const h = window.innerHeight || 1;
+            const vx = Math.max(-1, Math.min(1, (x - w / 2) / (w / 2)));
+            const vy = Math.max(-1, Math.min(1, (y - h / 2) / (h / 2)));
+
+            rafId = window.requestAnimationFrame(function () {
+              root.style.setProperty("--mx", String(x));
+              root.style.setProperty("--my", String(y));
+              root.style.setProperty("--vx", String(vx));
+              root.style.setProperty("--vy", String(vy));
+              rafId = null;
+            });
+          },
+          { passive: true }
+        );
+      })();
+
+      (function initNavActive() {
+        const links = Array.from(document.querySelectorAll(".nav-links a"));
+        const bySectionId = new Map();
+        for (const link of links) {
+          const href = link.getAttribute("href") || "";
+          const id = href.startsWith("#") ? href.slice(1) : "";
+          if (id) bySectionId.set(id, link);
+        }
+
+        const sections = Array.from(document.querySelectorAll("section[id]"));
+        if (!sections.length) return;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            let best = null;
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              if (!best || entry.intersectionRatio > best.intersectionRatio) {
+                best = entry;
+              }
+            }
+
+            if (!best) return;
+
+            for (const link of links) link.classList.remove("active");
+            const id = best.target.getAttribute("id");
+            const link = bySectionId.get(id);
+            if (link) link.classList.add("active");
+          },
+          {
+            root: null,
+            threshold: [0.15, 0.25, 0.35, 0.5, 0.65],
+            rootMargin: "-10% 0px -70% 0px",
+          }
+        );
+
+        for (const section of sections) observer.observe(section);
+      })();
+    </script>
   </body>
 </html>

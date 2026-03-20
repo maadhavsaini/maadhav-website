@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Maadhav Saini | Portfolio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Dancing+Script:wght@500;700&family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg0: #050b1f;
+        --bg1: #071332;
+        --text: rgba(255, 255, 255, 0.95);
+        --muted: rgba(248, 250, 252, 0.74);
+        --accent: #7dd3fc;
+        --accent2: rgba(125, 211, 252, 0.18);
+        --border: rgba(125, 211, 252, 0.25);
+        --shadow: rgba(0, 0, 0, 0.55);
+        --mx: 0;
+        --my: 0;
+        --vx: 0;
+        --vy: 0;
+        --nav-h: 62px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--text);
+        background: radial-gradient(1200px 800px at 20% 0%, #0a1b40 0%, var(--bg0) 55%),
+          linear-gradient(to bottom, var(--bg1), var(--bg0));
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .skip {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid var(--border);
+        transform: translateY(-150%);
+        transition: transform 160ms ease;
+        z-index: 10;
+      }
+
+      .skip:focus {
+        transform: translateY(0);
+      }
+
+      .bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+          radial-gradient(rgba(125, 211, 252, 0.18) 1px, transparent 1px),
+          radial-gradient(circle at 25% 10%, rgba(125, 211, 252, 0.22), transparent 55%),
+          radial-gradient(circle at 80% 35%, rgba(255, 255, 255, 0.14), transparent 55%),
+          linear-gradient(to bottom, rgba(5, 11, 31, 0) 0%, rgba(5, 11, 31, 0.8) 75%, rgba(5, 11, 31, 1) 100%);
+        background-size: 180px 180px, 260px 260px, auto, auto, auto;
+        background-position: 0 0, 60px 120px, 0 0, 0 0, 0 0;
+        transform: translate3d(calc(var(--vx) * -14px), calc(var(--vy) * -14px), 0);
+        will-change: transform;
+      }
+
+      .bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 30% 0%, rgba(125, 211, 252, 0.18), transparent 56%),
+          radial-gradient(circle at 90% 10%, rgba(125, 211, 252, 0.12), transparent 45%);
+        opacity: 0.9;
+        animation: nebulaFloat 18s ease-in-out infinite;
+      }
+
+      @keyframes nebulaFloat {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0) scale(1);
+          opacity: 0.85;
+        }
+        50% {
+          transform: translate3d(0, -18px, 0) scale(1.02);
+          opacity: 1;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .bg::after {
+          animation: none;
+        }
+      }
+
+      .cursor-glow {
+        position: fixed;
+        left: calc(var(--mx) * 1px);
+        top: calc(var(--my) * 1px);
+        width: clamp(240px, 42vw, 520px);
+        height: clamp(240px, 42vw, 520px);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 1;
+        background: radial-gradient(circle at center, rgba(125, 211, 252, 0.26), transparent 62%);
+        mix-blend-mode: screen;
+        opacity: 0.75;
+        filter: blur(0.2px);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .cursor-glow {
+          display: none;
+        }
+      }
+
+      @media (hover: none), (pointer: coarse) {
+        .cursor-glow {
+          display: none;
+        }
+      }
+
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 5;
+        height: var(--nav-h);
+        display: flex;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        background: rgba(5, 11, 31, 0.55);
+        border-bottom: 1px solid rgba(125, 211, 252, 0.18);
+      }
+
+      .nav-inner {
+        width: 100%;
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 0 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .brand {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: rgba(255, 255, 255, 0.94);
+        white-space: nowrap;
+      }
+
+      .links {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .nav-link {
+        position: relative;
+        padding: 10px 12px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        font-weight: 600;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.92);
+        transition: background 160ms ease, border-color 160ms ease;
+      }
+
+      .nav-link:hover {
+        background: rgba(125, 211, 252, 0.07);
+        border-color: rgba(125, 211, 252, 0.25);
+        text-decoration: none;
+      }
+
+      .nav-link.active {
+        background: rgba(125, 211, 252, 0.12);
+        border-color: rgba(125, 211, 252, 0.4);
+      }
+
+      .nav-link:focus-visible,
+      .btn:focus-visible,
+      .email:focus-visible,
+      .social-pill:focus-visible {
+        outline: 2px solid rgba(125, 211, 252, 0.75);
+        outline-offset: 3px;
+      }
+
+      .page {
+        position: relative;
+        z-index: 2;
+      }
+
+      .container {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 0 18px;
+      }
+
+      section {
+        scroll-margin-top: calc(var(--nav-h) + 18px);
+      }
+
+      .hero {
+        min-height: 100vh;
+        padding-top: calc(var(--nav-h) + 38px);
+        padding-bottom: 42px;
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 22px;
+        align-items: center;
+      }
+
+      @media (max-width: 860px) {
+        .hero {
+          grid-template-columns: 1fr;
+          padding-top: calc(var(--nav-h) + 28px);
+        }
+      }
+
+      .hero-title {
+        margin: 0 0 10px;
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(46px, 7vw, 84px);
+        line-height: 1;
+      }
+
+      .hero-sub {
+        margin: 0 0 14px;
+        font-size: 18px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .hero-one-liner {
+        margin: 0 0 18px;
+        font-size: 18px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 16px;
+        border-radius: 14px;
+        border: 1px solid rgba(125, 211, 252, 0.28);
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.95);
+        font-weight: 700;
+        transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.085);
+        border-color: rgba(125, 211, 252, 0.42);
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: rgba(125, 211, 252, 0.95);
+        color: #041022;
+        border-color: transparent;
+      }
+
+      .btn-primary:hover {
+        background: rgba(125, 211, 252, 1);
+      }
+
+      .card {
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(125, 211, 252, 0.22);
+        box-shadow: 0 20px 60px var(--shadow);
+        backdrop-filter: blur(10px);
+        padding: 18px;
+      }
+
+      .hero-card {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        background: radial-gradient(circle at 20% 20%, rgba(125, 211, 252, 0.35), transparent 55%),
+          radial-gradient(circle at 90% 25%, rgba(255, 255, 255, 0.2), transparent 48%),
+          linear-gradient(to bottom, rgba(5, 11, 31, 0) 0%, rgba(5, 11, 31, 0.35) 85%);
+        opacity: 0.95;
+        pointer-events: none;
+      }
+
+      .hero-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .card-title {
+        margin: 0 0 10px;
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .chip {
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(125, 211, 252, 0.28);
+        background: rgba(125, 211, 252, 0.07);
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.92);
+        white-space: nowrap;
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+
+      .section-title {
+        margin: 0 0 14px;
+        font-family: "Playfair Display", serif;
+        font-size: 30px;
+        letter-spacing: -0.01em;
+      }
+
+      .lead {
+        margin: 0 0 18px;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      @media (max-width: 980px) {
+        .skills-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 620px) {
+        .skills-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .skill-card {
+        padding: 18px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skill-card::before {
+        content: "";
+        position: absolute;
+        left: 14px;
+        top: 16px;
+        bottom: 16px;
+        width: 3px;
+        border-radius: 999px;
+        background: var(--accent, rgba(125, 211, 252, 0.7));
+        opacity: 0.95;
+      }
+
+      .skill-card > * {
+        position: relative;
+        z-index: 1;
+        padding-left: 10px;
+      }
+
+      .skill-name {
+        margin: 0 0 6px;
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+      }
+
+      .skill-desc {
+        margin: 0 0 10px;
+        color: var(--muted);
+        line-height: 1.65;
+        font-size: 14px;
+      }
+
+      .mini-list {
+        margin: 0;
+        padding-left: 18px;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      footer {
+        padding: 26px 0 44px;
+        border-top: 1px solid rgba(125, 211, 252, 0.18);
+        color: var(--muted);
+      }
+
+      .contact-row {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 14px;
+        align-items: start;
+      }
+
+      @media (max-width: 860px) {
+        .contact-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .email {
+        display: inline-flex;
+        margin-top: 8px;
+        padding: 12px 16px;
+        border-radius: 14px;
+        border: 1px solid rgba(125, 211, 252, 0.3);
+        background: rgba(255, 255, 255, 0.06);
+        font-weight: 800;
+        color: rgba(255, 255, 255, 0.95);
+      }
+
+      .socials {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .social-pill {
+        padding: 9px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(125, 211, 252, 0.28);
+        background: rgba(125, 211, 252, 0.07);
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .small {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a class="skip" href="#about">Skip to content</a>
+    <div class="bg" aria-hidden="true"></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+
+    <nav class="nav" aria-label="Primary">
+      <div class="nav-inner">
+        <a class="brand" href="#top">Maadhav Saini</a>
+        <div class="links">
+          <a class="nav-link" href="#about">About Me</a>
+          <a class="nav-link" href="#projects">Skills</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="page">
+      <section id="top" class="hero">
+        <div class="container">
+          <h1 class="hero-title">Maadhav Saini</h1>
+          <p class="hero-sub">Grade 9 IB student</p>
+          <p class="hero-one-liner">interested in graphic and code design</p>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="#projects">Skills</a>
+            <a class="btn" href="#contact">Contact</a>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="card hero-card" role="group" aria-label="Highlights">
+            <p class="card-title">What I’m into</p>
+            <div class="chips">
+              <span class="chip">Music (Alto Sax + Piano)</span>
+              <span class="chip">Medicine</span>
+              <span class="chip">Business</span>
+              <span class="chip">Visual Arts</span>
+              <span class="chip">Math</span>
+            </div>
+
+            <p class="small" style="margin-top: 14px;">
+              Currently building in the intersection of systems, design, and learning.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container">
+          <h2 class="section-title">About Me</h2>
+          <div class="card">
+            <p class="lead">
+              I'm Maadhav, a Grade 9 IB student in the GTA. I love visual arts, music, and biology.
+              In my free time, you'll find me reading or playing an instrument.
+            </p>
+            <p class="small">
+              I enjoy picking up new skills and turning ideas into something I can actually test.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="container">
+          <h2 class="section-title">Skills</h2>
+          <p class="small" style="margin-bottom: 18px;">
+            Projects will come next—here are the areas I’m focused on right now.
+          </p>
+
+          <div class="skills-grid">
+            <article class="card skill-card" style="--accent: rgba(125, 211, 252, 0.95);">
+              <h3 class="skill-name">Music</h3>
+              <p class="skill-desc">Alto saxophone and piano. Practicing, listening closely, and experimenting with sound.</p>
+              <ul class="mini-list">
+                <li>Alto sax</li>
+                <li>Piano</li>
+                <li>Performance + improvement</li>
+              </ul>
+            </article>
+
+            <article class="card skill-card" style="--accent: rgba(52, 211, 153, 0.9);">
+              <h3 class="skill-name">Medicine</h3>
+              <p class="skill-desc">Biology and medicine interests. Understanding how systems work and how decisions are made.</p>
+              <ul class="mini-list">
+                <li>Biology</li>
+                <li>Systems thinking</li>
+                <li>Curiosity-driven learning</li>
+              </ul>
+            </article>
+
+            <article class="card skill-card" style="--accent: rgba(251, 191, 36, 0.9);">
+              <h3 class="skill-name">Business</h3>
+              <p class="skill-desc">Strategy and real-world problem solving—turning ideas into something practical.</p>
+              <ul class="mini-list">
+                <li>Planning</li>
+                <li>Execution mindset</li>
+                <li>Real-world curiosity</li>
+              </ul>
+            </article>
+
+            <article class="card skill-card" style="--accent: rgba(232, 121, 249, 0.85);">
+              <h3 class="skill-name">Visual Arts</h3>
+              <p class="skill-desc">Graphic and code design. Care about layout, clarity, and visuals that communicate well.</p>
+              <ul class="mini-list">
+                <li>Layout + typography</li>
+                <li>Visual communication</li>
+                <li>Iterating designs</li>
+              </ul>
+            </article>
+
+            <article class="card skill-card" style="--accent: rgba(96, 165, 250, 0.9);">
+              <h3 class="skill-name">Math</h3>
+              <p class="skill-desc">Problem-solving and patterns. Using math to reason and build structured solutions.</p>
+              <ul class="mini-list">
+                <li>Reasoning</li>
+                <li>Patterns</li>
+                <li>Structured problem solving</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="container">
+          <h2 class="section-title">Contact</h2>
+          <div class="contact-row">
+            <div class="card">
+              <p class="card-title" style="margin-bottom: 6px;">Email</p>
+              <p class="small">Best way to reach me:</p>
+              <a class="email" href="mailto:maadhavsaini@hotmail.com">maadhavsaini@hotmail.com</a>
+            </div>
+
+            <div class="card">
+              <p class="card-title" style="margin-bottom: 6px;">Socials</p>
+              <p class="small">Say hi on any platform:</p>
+              <div class="socials">
+                <a class="social-pill" target="_blank" rel="noopener" href="https://www.instagram.com/saini.maadhav/">Instagram</a>
+                <a class="social-pill" target="_blank" rel="noopener" href="https://www.linkedin.com/in/maadhav-saini-8b64ba2b7/">LinkedIn</a>
+                <a class="social-pill" target="_blank" rel="noopener" href="https://github.com/maadhavsaini">GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="container">
+          © 2026 Maadhav Saini · One-page portfolio (Flask)
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      (function initCursor() {
+        const prefersReduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        const hoverNone = window.matchMedia("(hover: none)").matches;
+        const pointerCoarse = window.matchMedia("(pointer: coarse)").matches;
+        if (prefersReduced || hoverNone || pointerCoarse) return;
+
+        const root = document.documentElement;
+        root.style.setProperty("--mx", String(window.innerWidth / 2));
+        root.style.setProperty("--my", String(window.innerHeight / 2));
+        root.style.setProperty("--vx", "0");
+        root.style.setProperty("--vy", "0");
+        let rafId = null;
+
+        window.addEventListener(
+          "mousemove",
+          function (e) {
+            const x = e.clientX;
+            const y = e.clientY;
+            if (rafId) return;
+
+            const w = window.innerWidth || 1;
+            const h = window.innerHeight || 1;
+            const vx = Math.max(-1, Math.min(1, (x - w / 2) / (w / 2)));
+            const vy = Math.max(-1, Math.min(1, (y - h / 2) / (h / 2)));
+
+            rafId = window.requestAnimationFrame(function () {
+              root.style.setProperty("--mx", String(x));
+              root.style.setProperty("--my", String(y));
+              root.style.setProperty("--vx", String(vx));
+              root.style.setProperty("--vy", String(vy));
+              rafId = null;
+            });
+          },
+          { passive: true }
+        );
+      })();
+
+      (function initNavActive() {
+        const links = Array.from(document.querySelectorAll(".nav-link"));
+        const bySectionId = new Map();
+        for (const link of links) {
+          const href = link.getAttribute("href") || "";
+          const id = href.startsWith("#") ? href.slice(1) : "";
+          if (id) bySectionId.set(id, link);
+        }
+
+        const targetIds = new Set(bySectionId.keys());
+        const sections = Array.from(document.querySelectorAll("section[id]")).filter(
+          (section) => targetIds.has(section.id)
+        );
+        if (!sections.length) return;
+
+        const setActive = (id) => {
+          for (const link of links) link.classList.remove("active");
+          const link = bySectionId.get(id);
+          if (link) link.classList.add("active");
+        };
+
+        const pickInitial = () => {
+          let best = null;
+          for (const section of sections) {
+            const r = section.getBoundingClientRect();
+            const top = Math.max(r.top, 0);
+            const bottom = Math.min(r.bottom, window.innerHeight);
+            const visible = bottom - top;
+            if (visible <= 0) continue;
+
+            // Score based on how much of the section is currently visible.
+            const score = visible / Math.max(1, Math.min(r.height, window.innerHeight));
+            if (!best || score > best.score) best = { id: section.id, score };
+          }
+          if (best) setActive(best.id);
+        };
+        pickInitial();
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            let best = null;
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+            }
+            if (!best) return;
+
+            const id = best.target.getAttribute("id");
+            setActive(id);
+          },
+          {
+            threshold: [0.15, 0.25, 0.35, 0.5, 0.65],
+            rootMargin: "-10% 0px -70% 0px",
+          }
+        );
+
+        for (const section of sections) observer.observe(section);
+      })();
+    </script>
+  </body>
+</html>
+
